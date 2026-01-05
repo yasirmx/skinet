@@ -1,4 +1,4 @@
-﻿using Core.Entities;
+using Core.Entities;
 using Core.Interfaces;
 
 namespace Infrastructure.Data
@@ -12,6 +12,16 @@ namespace Infrastructure.Data
             if (spec.Criteria is not null)
             {
                 query = query.Where(spec.Criteria);
+            }
+
+            if (spec.OrderBy is not null)
+            {
+                query = query.OrderBy(spec.OrderBy);
+            }
+
+            if (spec.OrderByDescending is not null)
+            {
+                query = query.OrderByDescending(spec.OrderByDescending);
             }
 
             return query;
