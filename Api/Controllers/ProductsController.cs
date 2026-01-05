@@ -1,4 +1,4 @@
-﻿using Core.Entities;
+using Core.Entities;
 using Core.Interfaces;
 using Core.Specifications;
 using Microsoft.AspNetCore.Mvc;
@@ -13,9 +13,9 @@ namespace Skinet.Api.Controllers
     {
 
         [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<Product>>> GetProducts(string? brand, string? type)
+        public async Task<ActionResult<IReadOnlyList<Product>>> GetProducts(string? brand, string? type, string? sort)
         {
-            var spec = new ProductSpecification(brand, type);
+            var spec = new ProductSpecification(brand, type, sort);
 
             var products = await productRepository.ListWithSpecification(spec);
 
