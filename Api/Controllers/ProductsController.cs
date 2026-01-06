@@ -1,5 +1,6 @@
 using Core.Entities;
 using Core.Interfaces;
+using Core.Pagination;
 using Core.Specifications;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,7 +20,16 @@ namespace Skinet.Api.Controllers
 
             var products = await productRepository.ListWithSpecification(spec);
 
-            return Ok(products);
+            var numberOfProducts = await productRepository.CountAsync(spec);
+
+            var paginatedProducts = new PaginationInformation<Product>(
+                productSpecificationParameter.PageIndex,
+                productSpecificationParameter.PageSize,
+                numberOfProducts,
+                products
+            );
+
+            return Ok(paginatedProducts);
         }
 
         [HttpGet("{id}")]
