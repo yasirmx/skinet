@@ -4,9 +4,11 @@ namespace Core.Specifications
 {
     public class ProductSpecification : SpecificationsBase<Product>
     {
-        public ProductSpecification(ProductSpecificationParameter productSpecificationParameter) : base(x=> 
-        (!productSpecificationParameter.Brands.Any() || productSpecificationParameter.Brands.Contains(x.Brand) &&
-        (!productSpecificationParameter.Types.Any() || productSpecificationParameter.Types.Contains(x.Type))))
+        public ProductSpecification(ProductSpecificationParameter productSpecificationParameter) : base(x=>
+            (string.IsNullOrEmpty(productSpecificationParameter.Search)
+                || x.Name.ToLower().Contains(productSpecificationParameter.Search)) &&
+            (!productSpecificationParameter.Brands.Any() || productSpecificationParameter.Brands.Contains(x.Brand)) &&
+            (!productSpecificationParameter.Types.Any() || productSpecificationParameter.Types.Contains(x.Type)))
         {
             ApplyPaging(
                 (productSpecificationParameter.PageIndex - 1) * productSpecificationParameter.PageSize,
