@@ -69,13 +69,13 @@ namespace Skinet.Api.Controllers
         [HttpGet("brands")]
         public async Task<ActionResult<IReadOnlyList<string>>> GetProductBrands()
         {
-            return Ok((await productRepository.ListAll()).Select(p => p.Brand).Distinct().ToList());
+            return Ok((await productRepository.ListWithSpecification(new BrandSpecification())));
         }
 
         [HttpGet("types")]
         public async Task<ActionResult<IReadOnlyList<string>>> GetProductTypes()
         {
-            return Ok((await productRepository.ListAll()).Select(p => p.Type).Distinct().ToList());
+            return Ok((await productRepository.ListWithSpecification(new TypeSpecification())));
         }
 
         private async Task<bool> ProductExists(int id)

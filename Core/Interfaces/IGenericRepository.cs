@@ -10,12 +10,16 @@ namespace Core.Interfaces
 
         Task<IReadOnlyList<T>> ListWithSpecification(ISpecification<T> specification);
 
+        Task<IReadOnlyList<TResult>> ListWithSpecification<TResult>(ISpecification<T, TResult> specification);
+
+        Task<T?> GetEntityWithSpecification(ISpecification<T> specification);
+
+        Task<TResult?> GetEntityWithSpecification<TResult>(ISpecification<T, TResult> specification);
+
         Task Add(T entity);
 
         Task Update(T entity);
 
         Task Delete(T entity);
-
-        Task<T?> GetEntityWithSpecification(ISpecification<T> specification);
     }
 }

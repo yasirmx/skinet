@@ -31,9 +31,9 @@ namespace Infrastructure.Repositories
             return await ApplySpecification(specification).FirstOrDefaultAsync();
         }
 
-        public Task<IReadOnlyList<T>> List(ISpecification<T> spec)
+        public async Task<TResult?> GetEntityWithSpecification<TResult>(ISpecification<T, TResult> specification)
         {
-            throw new NotImplementedException();
+            return await ApplySpecification(specification).FirstOrDefaultAsync();
         }
 
         public async Task<IReadOnlyList<T>> ListAll()
@@ -42,6 +42,11 @@ namespace Infrastructure.Repositories
         }
 
         public async Task<IReadOnlyList<T>> ListWithSpecification(ISpecification<T> specification)
+        {
+            return await ApplySpecification(specification).ToListAsync();
+        }
+
+        public async Task<IReadOnlyList<TResult>> ListWithSpecification<TResult>(ISpecification<T, TResult> specification)
         {
             return await ApplySpecification(specification).ToListAsync();
         }
@@ -56,6 +61,11 @@ namespace Infrastructure.Repositories
         private IQueryable<T> ApplySpecification(ISpecification<T> specification)
         {
             return SpecificationEvaluator<T>.GetQuery(context.Set<T>().AsQueryable(), specification);
+        }
+
+        private IQueryable<TResult> ApplySpecification<TResult>(ISpecification<T, TResult> specification)
+        {
+            return SpecificationEvaluator<T>.GetQuery<T,TResult>(context.Set<T>().AsQueryable(), specification);
         }
     }
 }
