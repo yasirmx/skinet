@@ -18,6 +18,8 @@
 
         private List<string> _types = new List<string>();
 
+        private string? _search;
+
         public List<string> Brands 
         { 
             get => _brands; set
@@ -35,5 +37,7 @@
         }
 
         public string? Sort { get; set; }
+
+        public string? Search { get => _search ?? string.Empty; set => _search = value.ToLower(); }
     }
 }
