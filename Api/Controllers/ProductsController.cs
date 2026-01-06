@@ -8,9 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Skinet.Api.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class ProductsController(IGenericRepository<Product> productRepository) : ControllerBase
+
+    public class ProductsController(IGenericRepository<Product> productRepository) : BaseApiController
     {
 
         [HttpGet]
@@ -18,18 +17,7 @@ namespace Skinet.Api.Controllers
         {
             var spec = new ProductSpecification(productSpecificationParameter);
 
-            var products = await productRepository.ListWithSpecification(spec);
-
-            var numberOfProducts = await productRepository.CountAsync(spec);
-
-            var paginatedProducts = new PaginationInformation<Product>(
-                productSpecificationParameter.PageIndex,
-                productSpecificationParameter.PageSize,
-                numberOfProducts,
-                products
-            );
-
-            return Ok(paginatedProducts);
+            return await CreatePagedResult(productRepository, spec, productSpecificationParameter.PageIndex, productSpecificationParameter.PageSize);
         }
 
         [HttpGet("{id}")]
