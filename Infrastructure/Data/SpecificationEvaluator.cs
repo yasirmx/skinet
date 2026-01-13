@@ -70,7 +70,7 @@ namespace Infrastructure.Data
                 selectQuery = selectQuery?.Distinct();
             }
 
-            if(spec.IsPagingEnabled)
+            if(spec.IsPagingEnabled && spec.Skip != 0 && spec.Take !=0)
             {
                 selectQuery = selectQuery?.Skip(spec.Skip).Take(spec.Take);
             }
