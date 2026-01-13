@@ -11,5 +11,5 @@ import { ShopComponent } from "./features/shop/shop.component";
 })
 export class AppComponent {
 
-  title = 'Skinet Store';
+  //title = 'Skinet Store';
 }
