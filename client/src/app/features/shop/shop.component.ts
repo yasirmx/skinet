@@ -21,6 +21,9 @@ export class ShopComponent implements OnInit {
   private shopService = inject(ShopService);
   private dialogService = inject(MatDialog);
 
+  selectedBrands: string[] = [];
+  selectedTypes: string[] = [];
+
   products: any = [];
 
     ngOnInit(): void {
@@ -40,8 +43,21 @@ export class ShopComponent implements OnInit {
 
   openFiltersDialog() {
     const dialogRef = this.dialogService.open(FiltersDialog, {
-      width: '700px',
-      maxWidth: '90vw',
+      width: '500px',
+      data:{
+        selectedBrands: this.selectedBrands,
+        selectedTypes: this.selectedTypes
+      }
+    });
+    
+    dialogRef.afterClosed().subscribe({
+      next: result =>{
+        if(result){
+          console.log(result);
+          this.selectedBrands = result.selectedBrands;
+          this.selectedTypes = result.selectedTypes;
+        }
+      }
     });
   }
 }
