@@ -56,6 +56,10 @@ export class ShopComponent implements OnInit {
           console.log(result);
           this.selectedBrands = result.selectedBrands;
           this.selectedTypes = result.selectedTypes;
+          this.shopService.getProducts(this.selectedBrands, this.selectedTypes).subscribe({
+            next: (response: Pagination<Product>) => this.products = response.data,
+            error: (err: HttpErrorResponse) => console.log(err.message)
+          });
         }
       }
     });

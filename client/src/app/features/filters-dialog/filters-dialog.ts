@@ -5,10 +5,16 @@ import { MatSelectionList } from '@angular/material/list';
 import { MatListOption } from '@angular/material/list';
 import { MatButton } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-filters-dialog',
-  imports: [MatDivider, MatSelectionList, MatListOption, MatButton],
+  imports: [MatDivider, 
+    MatSelectionList, 
+    MatListOption, 
+    MatButton,
+    FormsModule
+  ],
   templateUrl: './filters-dialog.html',
   styleUrl: './filters-dialog.scss',
 })

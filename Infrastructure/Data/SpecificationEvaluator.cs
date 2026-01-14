@@ -30,7 +30,7 @@ namespace Infrastructure.Data
                 query = query.Distinct();
             }
 
-            if(spec.IsPagingEnabled)
+            if(CanPaginate(spec))
             {
                 query = query.Skip(spec.Skip).Take(spec.Take);
             }
@@ -70,12 +70,17 @@ namespace Infrastructure.Data
                 selectQuery = selectQuery?.Distinct();
             }
 
-            if(spec.IsPagingEnabled && spec.Skip != 0 && spec.Take !=0)
+            if(CanPaginate(spec))
             {
                 selectQuery = selectQuery?.Skip(spec.Skip).Take(spec.Take);
             }
 
             return selectQuery ?? query.Cast<TResult>();
+        }
+
+        private static bool CanPaginate(ISpecification<T> spec)
+        {
+            return spec.IsPagingEnabled && spec.Skip != 0 && spec.Take != 0;
         }
     }
 }
